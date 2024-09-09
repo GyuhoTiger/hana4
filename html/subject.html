@@ -12,10 +12,14 @@
       <label id="kor">요일을 선택하세요!</label>
     </div>
     <div style="margin-top: 1rem">
-      <button id="btnMath" onclick="throttlesetWeek('math')">
+      <button id="btnMath" onclick="throttleSetWeek('math')">
         수학수업 요일 선택 &gt;
       </button>
       <label id="math">요일을 선택하세요!</label>
+    </div>
+
+    <div style="margin-top: 2rem">
+      <input type="text" id="search" />
     </div>
 
     <script>
@@ -61,22 +65,40 @@
           nextWeekFunction[subject]();
       };
 
-      const throttlesetWeek = throttle(setWeek, 500);
+      const throttleSetWeek = throttle(setWeek, 500);
+
+      const debounceSearch = debounce((e) => {
+        // console.log('debounceSearch>>', e.target.value, e)
+        console.log(`${new Date().toISOString()} search>> ${e.target.value}`);
+      }, 500);
 
       window.addEventListener("load", () => {
-        document.getElementById("btnKor").addEventListener("click", () => {
+        const fnKor = debounce(() => {
           setWeek("kor");
-        });
+        }, 500);
+
+        document.getElementById("btnKor").addEventListener("click", fnKor);
+
+        document
+          .getElementById("search")
+          .addEventListener("keyup", debounceSearch);
       });
 
-      // test code
-      let runCnt = 0;
-      const intl = setInterval(() => {
-        runCnt += 1;
-        if (runCnt > 20) clearInterval(intl);
-        if (runCnt % 2 === 0) document.getElementById("btnKor").click();
-        else document.getElementById("btnMath").click();
-      }, 200);
+      function testing() {
+        // test code
+        let runCnt = 0;
+        const subjects = ["Kor", "Math"];
+        const intl = setInterval(() => {
+          runCnt += 1;
+          if (runCnt > 20) clearInterval(intl);
+          document.getElementById(`btn${subjects[runCnt % 2]}`).click();
+          // if (runCnt % 2 === 0)
+          //   document.getElementById('btnKor').click();
+          // else
+          //   document.getElementById('btnMath').click();
+        }, 200);
+      }
+      // testing();
     </script>
   </body>
 </html>
