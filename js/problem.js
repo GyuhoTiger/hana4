@@ -1,7 +1,7 @@
 // ex1)
 for (let i = 1; i <= 10; i += 1) {
-  console.log(i / 10);
-  //console.log(+i.toFixed(1))
+  //console.log(i / 10);
+  console.log(i.toFixed(1))
 }
 
 // ex2)

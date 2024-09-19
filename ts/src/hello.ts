@@ -161,3 +161,14 @@ if (gildong) {
 let a: string | undefined;
 a = Math.random() > 5 ? "aa" : undefined;
 a?.slice(1);
+
+function func(a: number, b?: number, c?: number) {
+  if (typeof b === "number" && typeof c === "number") {
+    console.log(a + b + c);
+  } else {
+    console.log(a * 20);
+  }
+}
+
+func(1); // 20
+func(1, 2, 3); // 6
